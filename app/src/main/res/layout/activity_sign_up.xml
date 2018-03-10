@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.ticket.m.signup.SignUpActivity">
+
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/email"
+            android:hint="Enter your email address"
+            android:inputType="textEmailAddress"
+            />
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:hint="Enter your password"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/email"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/ogPassword"
+            android:inputType="textPassword"
+            android:clickable="true"/>
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:hint="Re-enter your password"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/ogPassword"
+            android:id="@+id/rePassword"
+            android:textColor="@color/colorPrimary"
+            android:inputType="textPassword"/>
+
+    <Button
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:text="Sign-Up"
+            android:id="@+id/signUpBtn"
+            android:textSize="20sp"
+            android:layout_below="@id/rePassword"
+            android:layout_marginTop="20sp"
+            />
+
+        <TextView
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signUpBtn"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="30sp"
+            android:id="@+id/message"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message"
+        android:layout_marginTop="40sp"
+        android:id="@+id/login"
+        android:text="Already have an?"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:onClick="loginAccount"/>
+
+
+
+
+    </RelativeLayout>

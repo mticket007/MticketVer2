@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ticket.m.signup.Book">
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:id="@+id/dropdown"
+        android:layout_marginTop="100sp"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_below="@id/dropdown"
+        android:layout_marginTop="10sp"
+        android:id="@+id/dropdown1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/dropdown1"
+        android:id="@+id/bookBtn"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whiteColor"/>
+
+</RelativeLayout>

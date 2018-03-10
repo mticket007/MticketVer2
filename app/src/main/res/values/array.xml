@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stations">
+        <item>CSMT</item>
+        <item>Masjid</item>
+        <item>Sandhurst Road</item>
+        <item>Byculla</item>
+        <item>Chinchpokhli</item>
+        <item>Curry road</item>
+        <item>Parel</item>
+        <item>Dadar</item>
+        <item>Matunga</item>
+        <item>Sion</item>
+        <item>Kurla</item>
+        <item>Vidyavihar</item>
+        <item>Ghatkopar</item>
+        <item>Vikhroli</item>
+        <item>Kanjurmarg</item>
+        <item>Bhandup</item>
+        <item>Nahur</item>
+        <item>Mulund</item>
+        <item>Thane</item>
+        <item>Kalwa</item>
+        <item>Mumbra</item>
+        <item>Diva</item>
+        <item>Kapar</item>
+        <item>Dombivli</item>
+        <item>Thakurli</item>
+        <item>Kalyan</item><!--
+        <item>Shahad</item>
+        <item>Ambivali</item>
+        <item>Titwala</item>
+        <item>Khadavli</item>
+        <item>Vasind</item>
+        <item>Asangaon</item>
+        <item>Atgaon</item>
+        <item>Khardi</item>
+        <item>Kasara</item>-->
+    </string-array>
+
+</resources>
