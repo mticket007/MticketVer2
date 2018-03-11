@@ -51,7 +51,7 @@ public class QrCodeGenerator extends AppCompatActivity {
         QrcodeValue="{\"sourceStation\":"+sourceStation+",\"destinationStation\":"+destinationStation+",\"fair\":"+price+",\"bookingTime\":"+bookingTime+",\"expiry_time\":"+expiry_time+"}";
         System.out.println("size of string is "+QrcodeValue.length());
         try{
-            System.out.println("code is executed before conversion jsonObject");
+
             //error is in this part while converting from string to the json
             JSONObject jsonObject=new JSONObject(QrcodeValue);
             theValue=jsonObject.toString();
@@ -61,7 +61,6 @@ public class QrCodeGenerator extends AppCompatActivity {
         {
 
             e.printStackTrace();
-            System.out.println("before exception"+theValue.charAt(85));
 
         }
         // current date of the generation of the QRCODE and Random number

@@ -34,15 +34,12 @@ public class Book extends AppCompatActivity {
         a=n;
         b=m;
         c=b-a;
-        System.out.println("value of the c before abs "+c);
         Math.abs(c);
         negC=c;
-        System.out.println("value of the c after abs "+c);
-
         if (c==negC)
         {
             c= (-1)*(c);
-            System.out.println("value of the c in if block "+c);
+
         }
         if(c>=0&&c<=10)
         {
