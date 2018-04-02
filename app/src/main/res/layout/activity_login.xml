@@ -48,4 +48,14 @@
         android:onClick="createAccount"
         android:id="@+id/createAccountId"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forget password"
+        android:layout_below="@+id/createAccountId"
+        android:layout_marginTop="50sp"
+        android:clickable="true"
+        android:id="@+id/forgetPassword"
+        android:onClick="forgetPassword"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

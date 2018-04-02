@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 
-public class QrCodeGenerator extends AppCompatActivity {
+public class QrCodeGenerator extends BasicActivity {
     private ImageView Qrcodeid;
     public final static int QrcodeWidth=500;
     private Bitmap bitmap;

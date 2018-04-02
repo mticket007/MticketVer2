@@ -14,10 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.ProviderQueryResult;
 
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends BasicActivity {
 //business logic
 
 
@@ -28,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void loginAccount(View view)
     {
         Intent intent=new Intent(SignUpActivity.this,LoginActivity.class);
+        intent.putExtra("successful","");
         startActivity(intent);
     }
     public void insertOperation()

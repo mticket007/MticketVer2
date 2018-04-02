@@ -42,5 +42,20 @@
         android:id="@+id/bookBtn"
         android:background="@color/colorPrimary"
         android:textColor="@color/whiteColor"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fare"
+        android:text="Fare"
+        android:layout_below="@id/bookBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:id="@+id/fareTV"
+        android:layout_below="@id/fare"
+        />
 
 </RelativeLayout>

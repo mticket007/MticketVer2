@@ -27,7 +27,13 @@
         <activity
             android:name=".Book"
             android:label="@string/book" />
-        <activity android:name=".QrCodeGenerator"></activity>
+        <activity android:name=".QrCodeGenerator" />
+        <activity android:name=".BasicActivity" />
+        <activity
+            android:name=".MapActivity"
+            android:label="Map"></activity>
+        <activity android:name=".ForgetPassword"
+            android:label="Forget password "></activity>
     </application>
 
 </manifest>

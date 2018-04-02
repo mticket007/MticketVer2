@@ -1,32 +1,43 @@
 package com.ticket.m.signup;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Book extends AppCompatActivity {
+public class Book extends BasicActivity {
     private Spinner dropdown;
     private Spinner dropdown1;
     private String sourceStation,destinationStation;
     ArrayAdapter<CharSequence> adapter;
     private float location,destination,c,rs,amnt;
+    private FirebaseAuth auth;
 
 
-    Button bookBtn;
+    Button bookBtn,fare;
     int price;
     float negC;
     Date time_of_booking,expiryTime;
+    TextView fareTV;
     //fare logic
     public void cal(float n, float m)
     {
@@ -34,34 +45,34 @@ public class Book extends AppCompatActivity {
         a=n;
         b=m;
         c=b-a;
-        Math.abs(c);
-        negC=c;
-        if (c==negC)
-        {
+        System.out.print("The value of the c "+c);
+       Math.abs(c);
+       System.out.println("The value of the c  abs method "+c);
+       if(c<0)
+       {
             c= (-1)*(c);
-
         }
         if(c>=0&&c<=10)
         {
             rs=5;
         }
-        else if(c>10&&c<=30)
+        else if(c>=11&&c<=30)
         {
             rs=10;
         }
-        else if(c>30&&c<=55)
+        else if(c>=31&&c<=55)
         {
             rs=15;
         }
-        else if(c>55&&c<=85)
+        else if(c>=56&&c<=85)
         {
             rs=20;
         }
-        else if(c>85&&c<=105)
+        else if(c>=86&&c<=105)
         {
             rs=25;
         }
-        else if(c>105&&c<=115)
+        else if(c>=106&&c<=115)
         {
             rs=30;
         }
@@ -69,9 +80,11 @@ public class Book extends AppCompatActivity {
         {
             rs=35;
         }
-
-
+System.out.println("the fare is "+rs);
     }
+
+
+
 
 
 
@@ -82,14 +95,20 @@ public class Book extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
+        auth=FirebaseAuth.getInstance();
         bookBtn =findViewById(R.id.bookBtn);
         dropdown=findViewById(R.id.dropdown);
         dropdown1=findViewById(R.id.dropdown1);
+        fare=findViewById(R.id.fare);
+        fareTV=findViewById(R.id.fareTV);
         //adding array into the adapter object
 
         adapter = ArrayAdapter.createFromResource(this,R.array.stations,android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        final Book bk=new Book();
 
 //Adding adapter to the dropdown
         dropdown.setAdapter(adapter);
@@ -294,6 +313,7 @@ public class Book extends AppCompatActivity {
                 sourceStation=dropdown.getSelectedItem().toString();
                 destinationStation=dropdown1.getSelectedItem().toString();
                 cal(location,destination);
+
                 Calendar calendar=Calendar.getInstance();
                 time_of_booking=calendar.getTime();
                 calendar.add(Calendar.DAY_OF_YEAR,1);
@@ -303,7 +323,6 @@ public class Book extends AppCompatActivity {
                 String bookingTime=dateFormat.format(time_of_booking);
                 String expriy_time=dateFormat.format(expiryTime);
                 Intent intent=new Intent(Book.this,QrCodeGenerator.class);
-
                 intent.putExtra("source",sourceStation);//adding the values of sourceid  in the  intent hashmap object
                 intent.putExtra("destination",destinationStation);//adding the value of destinationid in intent hashmap object
                 intent.putExtra("price",rs);
@@ -312,5 +331,35 @@ public class Book extends AppCompatActivity {
                 startActivity(intent);//starting the activity QrcodeGeneratorView class
             }
         });
+        fare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                cal(location,destination);
+                AlertDialog.Builder builder=new AlertDialog.Builder(Book.this);
+                builder.setTitle("Your fare is Rs. "+rs);
+                builder.setCancelable(true);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.show();
+            }
+        });
     }
-}
+   /* public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutBTN:
+                Intent intent = new Intent(Book.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
+        }
+        return true;
+
+    }
+*/}
