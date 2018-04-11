@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="stations">
+    <string-array name="Central_stations">
         <item>CSMT</item>
         <item>Masjid</item>
         <item>Sandhurst Road</item>
@@ -23,19 +23,81 @@
         <item>Kalwa</item>
         <item>Mumbra</item>
         <item>Diva</item>
-        <item>Kapar</item>
+        <item>Kopar</item>
         <item>Dombivli</item>
         <item>Thakurli</item>
-        <item>Kalyan</item><!--
+        <item>Kalyan</item>
         <item>Shahad</item>
-        <item>Ambivali</item>
+        <item>Ambivli</item>
         <item>Titwala</item>
         <item>Khadavli</item>
         <item>Vasind</item>
         <item>Asangaon</item>
         <item>Atgaon</item>
         <item>Khardi</item>
-        <item>Kasara</item>-->
+        <item>Kasara</item>
+        <item>Vitthalvadi</item>
+        <item>Ulhasnagar</item>
+        <item>Ambernath</item>
+        <item>Badlapur</item>
+        <item>Vangani</item>
+        <item>Shelu</item>
+        <item>Neral</item>
+        <item>Bhivpuri Rd.</item>
+        <item>Karjat</item>
+        <item>Palasdhari</item>
+        <item>Kelavali</item>
+        <item>Dolavali</item>
+        <item>Lowjee</item>
+        <item>Khopoli</item>
+
+    </string-array>
+    <string-array name="Western_stations">
+        <item>Churchgate</item>
+        <item>Marine Lines</item>
+        <item>Charni Road</item>
+        <item>Grant Road</item>
+        <item>Mumbai Central</item>
+        <item>Mahalakshmi</item>
+        <item>Lower Parel</item>
+        <item>Prabhadevi</item>
+        <item>Dadar</item>
+        <item>Matunga Road</item>
+        <item>Mahim Jn</item>
+        <item>Bandra</item>
+        <item>Khar Road</item>
+        <item>Santa Cruz</item>
+        <item>Vile Parle</item>
+        <item>Andheri</item>
+        <item>Jogeshwari</item>
+        <item>Ram Mandir</item>
+        <item>Goregaon</item>
+        <item>Malad</item>
+        <item>Kandivali</item>
+        <item>Borivali</item>
+        <item>Dahisar</item>
+        <item>Mira Rd</item>
+        <item>Bhayander</item>
+        <item>Naigaon</item>
+        <item>Vasai Road</item>
+        <item>Nalla Sopara</item>
+        <item>Virar</item>
+        <item>vaitarana</item>
+        <item>Saphale</item>
+        <item>Kelva Rd</item>
+        <item>Palghar</item>
+        <item>Umroli Rd</item>
+        <item>Boisar</item>
+        <item>Vangaon</item>
+        <item>Dahanu Rd</item>
+    </string-array>
+    <string-array name="classSelection">
+        <item>First class</item>
+        <item>Second class</item>
     </string-array>
 
+    <string-array name="journeySelection">
+        <item>Single </item>
+        <item>Return </item>
+    </string-array>
 </resources>

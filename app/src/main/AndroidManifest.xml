@@ -31,9 +31,11 @@
         <activity android:name=".BasicActivity" />
         <activity
             android:name=".MapActivity"
-            android:label="Map"></activity>
-        <activity android:name=".ForgetPassword"
-            android:label="Forget password "></activity>
+            android:label="Map" />
+        <activity
+            android:name=".ForgetPassword"
+            android:label="Forget password " />
+        <activity android:name=".BookForWestern"></activity>
     </application>
 
 </manifest>

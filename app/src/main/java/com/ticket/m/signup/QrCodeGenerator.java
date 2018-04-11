@@ -37,47 +37,14 @@ public class QrCodeGenerator extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code_generator);
         //instantiating the com.ticket.m.mticketapplicationintegration.QrDBHelper class
-
+        //instantiating QrDBHelper class
+        QrDBHelper qrDBHelper=new QrDBHelper(this);
         Bundle bundle=getIntent().getExtras();
-        String sourceStation=getIntent().getStringExtra("source");
-        String destinationStation=getIntent().getStringExtra("destination");
-        float price=bundle.getFloat("price");
-        String bookingTime,expiry_time;
-        bookingTime=getIntent().getStringExtra("bookingTime");
-        expiry_time=getIntent().getStringExtra("expiry_time");
         Qrcodeid=findViewById(R.id.Qrcodeid);
-        //errorTv instantiating
-        errorTv=findViewById(R.id.errorTv);
-        QrcodeValue="{\"sourceStation\":"+sourceStation+",\"destinationStation\":"+destinationStation+",\"fair\":"+price+",\"bookingTime\":"+bookingTime+",\"expiry_time\":"+expiry_time+"}";
-        System.out.println("size of string is "+QrcodeValue.length());
-        try{
 
-            //error is in this part while converting from string to the json
-            JSONObject jsonObject=new JSONObject(QrcodeValue);
-            theValue=jsonObject.toString();
-
-        }
-        catch(JSONException e)
+        if (bundle.getInt("buttonValue")==1)
         {
 
-            e.printStackTrace();
-
-        }
-        // current date of the generation of the QRCODE and Random number
-        try {
-            bitmap = TextToImageEncode(theValue);
-                   /* QrDBHelper qrDBHelper=new QrDBHelper(this);
-                    SQLiteDatabase db=qrDBHelper.getWritableDatabase();
-                    ContentValues values=new ContentValues();
-                    size=bitmap.getByteCount();
-                    ByteBuffer buffer=ByteBuffer.allocate(size);
-                    bitmap.copyPixelsToBuffer(buffer);
-                    byte[] array=buffer.array();
-                    System.out.println(size+"length of the array is "+buffer.array());
-                    values.put("Qrcode",array);
-                    db.insert("QrCode",null,values);*/
-            //instantiating QrDBHelper class
-            QrDBHelper qrDBHelper=new QrDBHelper(this);
             //checking if database is available
             SQLiteDatabase dbR = qrDBHelper.getReadableDatabase();
             Cursor  c=dbR.rawQuery("SELECT * FROM QrCode",null);
@@ -89,42 +56,82 @@ public class QrCodeGenerator extends BasicActivity {
                     Cursor dbCursor = dbReading.rawQuery("select Qrcode from QrCode where Id=1",null);
                     dbCursor.moveToFirst();
                     int i = dbCursor.getColumnIndex("Qrcode");
-                    System.out.println("index value is " + i);
                     byte[] byteArray = dbCursor.getBlob(dbCursor.getColumnIndex("Qrcode"));
                     Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                             /*ByteArrayInputStream byteArrayInputStream=new ByteArrayInputStream(byteArray);
                             Bitmap bm=BitmapFactory.decodeStream(byteArrayInputStream);*/
                     Qrcodeid.setImageBitmap(bm);
-                    Toast.makeText(this, "Retrieving executed", Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
                     System.out.println("error is " + e);
                 }
             }
-            else {
-                Qrcodeid.setImageBitmap(bitmap);
-                SQLiteDatabase db = qrDBHelper.getWritableDatabase();
-                //getting an image file from the Qrcodeid image view and converting it to the drawable image adding it to the db
-                Bitmap bt = ((BitmapDrawable) Qrcodeid.getDrawable()).getBitmap();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bt.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] img = byteArrayOutputStream.toByteArray();
-                ContentValues values = new ContentValues();
-                values.put("Id",1);
-                values.put("Qrcode", img);
-                db.insert("QrCode", null, values);
 
+
+        }
+        if(bundle.getInt("buttonValue")==2)
+        {
+            String type_of_ticket=getIntent().getStringExtra("type_of_ticket");
+            String type_of_journey=getIntent().getStringExtra("type_of_journey");
+            String sourceStation=getIntent().getStringExtra("source");
+            String destinationStation=getIntent().getStringExtra("destination");
+            float price=bundle.getFloat("price");
+            String bookingTime,expiry_time;
+            bookingTime=getIntent().getStringExtra("bookingTime");
+            expiry_time=getIntent().getStringExtra("expiry_time");
+
+            //errorTv instantiating
+            errorTv=findViewById(R.id.errorTv);
+            QrcodeValue="{\"sourceStation\":"+sourceStation+",\"destinationStation\":"+destinationStation+",\"fair\":"+price+",\"bookingTime\":"+bookingTime+",\"expiry_time\":"+expiry_time+",\"type_of_ticket\":"+type_of_ticket+",\"type_of_journey\":" + type_of_journey + "}";
+            try{
+
+                //error is in this part while converting from string to the json
+                JSONObject jsonObject=new JSONObject(QrcodeValue);
+                theValue=jsonObject.toString();
 
             }
+            catch(JSONException e)
+            {
+
+                e.printStackTrace();
+
+            }
+            try {
+                //passing the value to the TextToImageEncode() method to generate the qr code
+                bitmap = TextToImageEncode(theValue);
+            } catch (Exception e) {
+                System.out.println("error is " + e);
+            }
+
+            Qrcodeid.setImageBitmap(bitmap);
+           SQLiteDatabase db = qrDBHelper.getWritableDatabase();
+           db.delete("QrCode","Id=?",new String[]{"1"});
+            //getting an image file from the Qrcodeid image view and converting it to the drawable image adding it to the db
+            Bitmap bt = ((BitmapDrawable) Qrcodeid.getDrawable()).getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bt.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] img = byteArrayOutputStream.toByteArray();
+            ContentValues values = new ContentValues();
+            values.put("Id",1);
+            values.put("Qrcode", img);
+            db.insert("QrCode", null, values);
+
+
+            // current date of the generation of the QRCODE and Random number
 
         }
 
-        catch (WriterException e)
+
+
+
+        }
+
+       /* catch (WriterException e)
         {
             e.printStackTrace();
-        }
-    }
-    //
+        }*/
+
+    //method for generating the Qrcode
     Bitmap TextToImageEncode(String Value) throws WriterException {
         BitMatrix bitMatrix;
         try

@@ -124,6 +124,17 @@ public class BasicActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent);
 
                 return true;
+            case R.id.AlreadyHaveTicket:
+                Intent intent1 =new Intent(this,QrCodeGenerator.class);
+                intent1.putExtra("buttonValue",1);
+                startActivity(intent1);
+                return true;
+            case R.id.central_line:
+                startActivity(new Intent(this,Book.class));
+                return true;
+            case R.id.western_line:
+                startActivity(new Intent(this,BookForWestern.class));
+                return true;
 
 
         }
