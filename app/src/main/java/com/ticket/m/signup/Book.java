@@ -3,6 +3,8 @@ package com.ticket.m.signup;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -550,56 +552,73 @@ System.out.println("the fare is "+rs);
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type_of_ticket,type_of_journey="";
-                sourceStation=dropdown.getSelectedItem().toString();
-                destinationStation=dropdown1.getSelectedItem().toString();
-                if(typeOfClass==2)
-                {
-                    secondClass_fare_cal(location,destination);
-                     type_of_ticket="II";
-                     if(typeOfJourney==1)
-                     {
-                         type_of_journey="Single";
-                     }
-                     if(typeOfJourney==2)
-                     {
-                         type_of_journey="Return";
-                         rs=rs*2;
-                     }
-
+                boolean connected = false;
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                    connected = true;
                 }
-                else{
-                    firstClass_fare_cal(location,destination);
-                    type_of_ticket="I";
-                    if(typeOfJourney==1)
-                    {
-                        type_of_journey="Single";
-                    }
-                    if(typeOfJourney==2)
-                    {
-                        type_of_journey="Return";
-                        rs=rs*2;
-                    }
-                }
+                if (connected == false) {
 
-                Calendar calendar=Calendar.getInstance();
-                time_of_booking=calendar.getTime();
-                calendar.add(Calendar.DAY_OF_YEAR,1);
-                expiryTime=calendar.getTime();
-                //converting it to the date-month-year format and converting the values into string format
-                DateFormat dateFormat=new SimpleDateFormat("dd-MMM-yyyy");
-                String bookingTime=dateFormat.format(time_of_booking);
-                String expriy_time=dateFormat.format(expiryTime);
-                Intent intent=new Intent(Book.this,QrCodeGenerator.class);
-                intent.putExtra("source",sourceStation);//adding the values of sourceid  in the  intent hashmap object
-                intent.putExtra("destination",destinationStation);//adding the value of destinationid in intent hashmap object
-                intent.putExtra("price",rs);
-                intent.putExtra("bookingTime",bookingTime);
-                intent.putExtra("expiry_time",expriy_time);
-                intent.putExtra("type_of_ticket",type_of_ticket);
-                intent.putExtra("type_of_journey",type_of_journey);
-                intent.putExtra("buttonValue",2);
-                startActivity(intent);//starting the activity QrcodeGeneratorView class
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Book.this);
+                    builder.setTitle("You are not connected to the internet \n Please connect to the internet to book your ticket");
+                    builder.setCancelable(true);
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                } else {
+
+                    String type_of_ticket, type_of_journey = "";
+                    sourceStation = dropdown.getSelectedItem().toString();
+                    destinationStation = dropdown1.getSelectedItem().toString();
+                    if (typeOfClass == 2) {
+                        secondClass_fare_cal(location, destination);
+                        type_of_ticket = "II";
+                        if (typeOfJourney == 1) {
+                            type_of_journey = "Single";
+                        }
+                        if (typeOfJourney == 2) {
+                            type_of_journey = "Return";
+                            rs = rs * 2;
+                        }
+
+                    } else {
+                        firstClass_fare_cal(location, destination);
+                        type_of_ticket = "I";
+                        if (typeOfJourney == 1) {
+                            type_of_journey = "Single";
+                        }
+                        if (typeOfJourney == 2) {
+                            type_of_journey = "Return";
+                            rs = rs * 2;
+                        }
+                    }
+
+                    Calendar calendar = Calendar.getInstance();
+                    time_of_booking = calendar.getTime();
+                    calendar.add(Calendar.DAY_OF_YEAR, 1);
+                    expiryTime = calendar.getTime();
+                    //converting it to the date-month-year format and converting the values into string format
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                    String bookingTime = dateFormat.format(time_of_booking);
+                    String expriy_time = dateFormat.format(expiryTime);
+                    Intent intent = new Intent(Book.this, QrCodeGenerator.class);
+                    intent.putExtra("source", sourceStation);//adding the values of sourceid  in the  intent hashmap object
+                    intent.putExtra("destination", destinationStation);//adding the value of destinationid in intent hashmap object
+                    intent.putExtra("price", rs);
+                    intent.putExtra("bookingTime", bookingTime);
+                    intent.putExtra("expiry_time", expriy_time);
+                    intent.putExtra("type_of_ticket", type_of_ticket);
+                    intent.putExtra("type_of_journey", type_of_journey);
+                    intent.putExtra("buttonValue", 2);
+                    startActivity(intent);//starting the activity QrcodeGeneratorView class
+                }
             }
         });
         fare.setOnClickListener(new View.OnClickListener() {

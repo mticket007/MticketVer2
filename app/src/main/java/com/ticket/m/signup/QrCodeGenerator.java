@@ -12,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -22,6 +27,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class QrCodeGenerator extends BasicActivity {
     private ImageView Qrcodeid;
     public final static int QrcodeWidth=500;
@@ -29,6 +36,8 @@ public class QrCodeGenerator extends BasicActivity {
     private String QrcodeValue;
     private TextView errorTv;
     String theValue;
+    private FirebaseAuth auth;
+    private StorageReference storageReference;
 
     //size of the Bitmap
     int size;
@@ -41,6 +50,7 @@ public class QrCodeGenerator extends BasicActivity {
         QrDBHelper qrDBHelper=new QrDBHelper(this);
         Bundle bundle=getIntent().getExtras();
         Qrcodeid=findViewById(R.id.Qrcodeid);
+        auth=FirebaseAuth.getInstance();
 
         if (bundle.getInt("buttonValue")==1)
         {
@@ -74,7 +84,9 @@ public class QrCodeGenerator extends BasicActivity {
             String type_of_ticket=getIntent().getStringExtra("type_of_ticket");
             String type_of_journey=getIntent().getStringExtra("type_of_journey");
             String sourceStation=getIntent().getStringExtra("source");
+            sourceStation=sourceStation.replace(" ","_");
             String destinationStation=getIntent().getStringExtra("destination");
+            destinationStation=destinationStation.replace(" ","_");
             float price=bundle.getFloat("price");
             String bookingTime,expiry_time;
             bookingTime=getIntent().getStringExtra("bookingTime");
@@ -82,7 +94,7 @@ public class QrCodeGenerator extends BasicActivity {
 
             //errorTv instantiating
             errorTv=findViewById(R.id.errorTv);
-            QrcodeValue="{\"sourceStation\":"+sourceStation+",\"destinationStation\":"+destinationStation+",\"fair\":"+price+",\"bookingTime\":"+bookingTime+",\"expiry_time\":"+expiry_time+",\"type_of_ticket\":"+type_of_ticket+",\"type_of_journey\":" + type_of_journey + "}";
+            QrcodeValue="{\"sourceStation\":"+sourceStation+",\"destinationStation\":"+destinationStation+",\"fare\":"+price+",\"bookingTime\":"+bookingTime+",\"expiry_time\":"+expiry_time+",\"type_of_ticket\":"+type_of_ticket+",\"type_of_journey\":" + type_of_journey + "}";
             try{
 
                 //error is in this part while converting from string to the json
@@ -115,6 +127,24 @@ public class QrCodeGenerator extends BasicActivity {
             values.put("Id",1);
             values.put("Qrcode", img);
             db.insert("QrCode", null, values);
+            String userId=auth.getCurrentUser().getUid();
+            storageReference=FirebaseStorage.getInstance().getReference(userId).child(auth.getCurrentUser().getEmail());
+            UploadTask uploadTask=storageReference.putBytes(img);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    if (taskSnapshot.getTask().isSuccessful()) {
+                        Toast.makeText(QrCodeGenerator.this, "Successful", Toast.LENGTH_LONG);
+
+                    }
+                    else
+                    {
+                        Toast.makeText(QrCodeGenerator.this,"Unsuccessful",Toast.LENGTH_LONG);
+                    }
+                }
+            });
+
+
 
 
             // current date of the generation of the QRCODE and Random number
